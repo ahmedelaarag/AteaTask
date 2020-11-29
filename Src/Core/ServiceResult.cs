@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using Core.Interfaces;
+﻿using System.Net;
 
 namespace Core
 {
