@@ -54,7 +54,7 @@
     <ItemGroup>
         <Compile Include="ApiError.cs" />
         <Compile Include="ComponentRegistrar\ComponentRegistrar.cs" />
-        <Compile Include="Dto\BillDto.cs" />
+        <Compile Include="Dto\OrderDto.cs" />
         <Compile Include="Dto\PaymentReceiptDto.cs" />
         <Compile Include="Enums\Gateway.cs" />
         <Compile Include="GatewayResult.cs" />
