@@ -27,54 +27,39 @@ namespace PresentationAPITests.Controller
             _orderService = new OrderService(_gatewayService, new OrderValidation());
             _orderController = new OrderController(_orderService);
         }
-        
+
         [Theory]
         [MemberData(nameof(GetOrders))]
         public void OrderPaymentTests(Gateway gateway, decimal amount, string orderNumber, int userId, bool success)
         {
-           var order = TestHelper.CreateOrder(gateway, amount, orderNumber, userId);
+            var order = TestHelper.CreateOrder(gateway, amount, orderNumber, userId);
 
-           if (gateway == Gateway.None)
-           {
-               _gatewayService.ProcessInternal(order)
-                   .Throws(new NotImplementedException($"{nameof(gateway)} is not implemented yet."));
-           }
-           else
-           {
-               _gatewayService.ProcessInternal(order)
-                   .Returns(new ServiceResult<OrderDto>(order, null, HttpStatusCode.OK));
-           }
+            _gatewayService.ProcessInternal(order)
+                .Returns(new ServiceResult<OrderDto>(order, null, HttpStatusCode.OK));
 
-           if (!success && gateway == Gateway.None)
-           {
-               Assert.Throws<NotImplementedException>(() => _orderController.OrderPayment(order));
-           }
-           else
-           {
-               var result = _orderController.OrderPayment(order);
-               Assert.NotNull(result);
-               if (!success)
-               {
-                   var errorResponse = result as NegotiatedContentResult<ApiError>;
-                   Assert.NotNull(errorResponse);
-                   Assert.NotNull(errorResponse.Content);
-                   var apiError = errorResponse.Content;
-                   Assert.Single(apiError.Errors);
-                   Assert.NotNull(apiError.Message);
-               }
-               else
-               {
-                   var okResponse = result as OkNegotiatedContentResult<PaymentReceiptDto>;
-                   Assert.NotNull(okResponse);
-                   Assert.NotNull(okResponse.Content);
-                   var paymentReceipt = okResponse.Content;
-                   Assert.Equal(paymentReceipt.OrderNumber, order.OrderNumber);
-                   Assert.Equal(paymentReceipt.UserId, order.UserId);
-                   Assert.Equal(paymentReceipt.Amount, order.Amount);
-               }
-           }
+            var result = _orderController.Pay(order);
+            Assert.NotNull(result);
+            if (!success)
+            {
+                var errorResponse = result as NegotiatedContentResult<ApiError>;
+                Assert.NotNull(errorResponse);
+                Assert.NotNull(errorResponse.Content);
+                var apiError = errorResponse.Content;
+                Assert.Single(apiError.Errors);
+                Assert.NotNull(apiError.Message);
+            }
+            else
+            {
+                var okResponse = result as OkNegotiatedContentResult<PaymentReceiptDto>;
+                Assert.NotNull(okResponse);
+                Assert.NotNull(okResponse.Content);
+                var paymentReceipt = okResponse.Content;
+                Assert.Equal(paymentReceipt.OrderNumber, order.OrderNumber);
+                Assert.Equal(paymentReceipt.UserId, order.UserId);
+                Assert.Equal(paymentReceipt.Amount, order.Amount);
+            }
         }
-        
+
         public static IEnumerable<object[]> GetOrders()
         {
             return new[]

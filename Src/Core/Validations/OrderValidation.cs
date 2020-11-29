@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core.Enums;
 using Core.Interfaces;
 
 namespace Core.Validations
@@ -10,6 +11,14 @@ namespace Core.Validations
             if (string.IsNullOrEmpty(orderNumber))
             {
                 yield return new ApiError("Order number can not be null or empty");
+            }
+        }
+
+        public IEnumerable<ApiError> ValidateGatewayIdentifier(Gateway gateway)
+        {
+            if (gateway == Gateway.None)
+            {
+                yield return new ApiError("Wrong gateway, please specify the correct gateway to process payment.");
             }
         }
 

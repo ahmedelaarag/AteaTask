@@ -24,11 +24,18 @@ namespace Core.Services
             _gatewayService = gatewayService;
             _orderValidation = orderValidation;
         }
-        
+
         public IServiceResult ProcessOrder(OrderDto order)
         {
-            var gatewayResponseResult = _gatewayService.ProcessInternal(order);
-            return Map(gatewayResponseResult);
+            try
+            {
+                var gatewayResponseResult = _gatewayService.ProcessInternal(order);
+                return Map(gatewayResponseResult);
+            }
+            catch (NotImplementedException e)
+            {
+                return new ServiceResult<PaymentReceiptDto>(new ApiError(e.Message), HttpStatusCode.InternalServerError);
+            }
         }
 
         public ApiError Validate(OrderDto orderDto)
@@ -37,7 +44,8 @@ namespace Core.Services
             errors.AddRange(_orderValidation.ValidateOrderNumber(orderDto.OrderNumber));
             errors.AddRange(_orderValidation.ValidateUser(orderDto.UserId));
             errors.AddRange(_orderValidation.ValidateAmount(orderDto.Amount));
-
+            errors.AddRange(_orderValidation.ValidateGatewayIdentifier(orderDto.PaymentGateway));
+            
             return new ApiError(errors.FirstOrDefault()?.Message, errors);
         }
 

@@ -18,7 +18,7 @@ namespace PresentationAPI
         
         [HttpPost]
         [ResponseType(typeof(PaymentReceiptDto))]
-        public IHttpActionResult OrderPayment([FromBody]OrderDto order)
+        public IHttpActionResult Pay([FromBody]OrderDto order)
         {
             if (order == null) return BadRequest(nameof(order));
 
