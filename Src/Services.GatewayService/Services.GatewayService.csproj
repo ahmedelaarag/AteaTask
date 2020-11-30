@@ -51,13 +51,13 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="ComponentRegistrar\GatewayComponentRegistrar.cs" />
-        <Compile Include="GatewayResult.cs" />
         <Compile Include="GatewayService.cs" />
         <Compile Include="Gateways\Bank.cs" />
         <Compile Include="Gateways\GatewayFactory.cs" />
+        <Compile Include="Gateways\GatewayResult.cs" />
+        <Compile Include="Gateways\IGateway.cs" />
+        <Compile Include="Gateways\IGatewayResult.cs" />
         <Compile Include="Gateways\PayPal.cs" />
-        <Compile Include="IGateway.cs" />
-        <Compile Include="IGatewayResult.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>

@@ -7,21 +7,21 @@
 4. Mocking object by *NUnit*. </br > 
 
 # Solution files
-The solution contains of two main projects, and each project has a own test project as well. </br >
-# Src
-# Services
+The solution contains of two main folders, Src and Tests. </br >
+# 1.Src
+# a.Services
   simple implementation of microservices.
   1. GatewayService </br >
   2. OrderService </br >
-# Presentation layer
-1. RestApi -- Controllers
-# Core
+# b.Presentation layer
+  1. RestApi -- Controllers
+# c.Core
  1. Dtos </br >
  1. System Enum </br >
  2. PaymentReceiptDto -- the successfull return type for the end user. </br >
  3. Return types objects --- Successfull returns *IResult*, failed returns *ApiError* 
 
-# Tests
+# 2.Tests
 1.Core.Xunit-- Covering Core project</br >
 2.Presentation.RestApi.Xunit-- Covering Presentation.RestApi </br >
 3.Services.GatewayService.Xunit-- Covering Services.GatewayService </br >

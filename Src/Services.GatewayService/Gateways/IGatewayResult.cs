@@ -1,6 +1,6 @@
 ﻿using Core;
 
-namespace Services.GatewayService
+namespace Services.GatewayService.Gateways
 {
     public interface IGatewayResult : IResult
     {

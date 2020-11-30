@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Core;
 
-namespace Services.GatewayService
+namespace Services.GatewayService.Gateways
 {
     internal class GatewayResult : IGatewayResult
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Core.Dto;
 
-namespace Services.GatewayService
+namespace Services.GatewayService.Gateways
 {
     public interface IGateway
     {
